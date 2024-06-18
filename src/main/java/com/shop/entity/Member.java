@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter //롬복들
 @Setter
 @ToString
-public class Member {
+public class Member extends BaseEntity{
     //기본키 컬럼명 member_id Ai
     @Id
     @Column(name = "member_id")
