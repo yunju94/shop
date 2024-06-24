@@ -10,4 +10,6 @@ public interface ItemImgRepository extends JpaRepository<ItemImg, Long> {
     List<ItemImg> findByItemIdOrderByIdAsc(Long itemId);
     //상품 이미지 오른차순으로 꺼낸다.
 
+    ItemImg findByItemIdAndRepImgYn(Long itemId, String repImgYn);
+
 }
