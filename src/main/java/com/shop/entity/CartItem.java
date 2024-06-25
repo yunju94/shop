@@ -37,5 +37,10 @@ public class CartItem extends  BaseEntity{
         this.count += count;
     }
 
+    public  void  updateCount(int count){
+        this.count = count;
+        //변경 감지로 인해 DB에서 알아서 작동/수정
+    }
+
 
 }

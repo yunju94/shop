@@ -68,13 +68,17 @@
             var header = $("meta[name='_csrf_header']").attr("content");
 
             var url = "/cart";
+            //변수 선언과 동시에 값 대입
 
             var paramData = {
+            //객체 리트럴
+            //    키      값 -> itemid/count의 값
                 itemId : $("#itemId").val(),
                 count : $("#count").val()
             };
 
             var param = JSON.stringify(paramData);
+            //son 형식을 문자열로 변경
 
             $.ajax({
                 url : url,
