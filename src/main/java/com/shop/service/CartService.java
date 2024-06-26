@@ -4,14 +4,8 @@ import com.shop.dto.CartDetailDto;
 import com.shop.dto.CartItemDto;
 import com.shop.dto.CartOrderDto;
 import com.shop.dto.OrderDto;
-import com.shop.entity.Cart;
-import com.shop.entity.CartItem;
-import com.shop.entity.Item;
-import com.shop.entity.Member;
-import com.shop.repository.CartItemRepository;
-import com.shop.repository.CartRepository;
-import com.shop.repository.ItemRepository;
-import com.shop.repository.MemberRepository;
+import com.shop.entity.*;
+import com.shop.repository.*;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +14,7 @@ import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,6 +25,7 @@ public class CartService {
     private  final CartRepository cartRepository;
     private  final CartItemRepository cartItemRepository;
     private  final  OrderService orderService;
+    private  final UserRepository userRepository;
 
     public  Long addCart(CartItemDto cartItemDto, String email){
         Member member = memberRepository.findByEmail(email); //쿼리문 날려서 멤버 객체 빼옴

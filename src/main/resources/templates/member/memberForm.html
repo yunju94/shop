@@ -4,6 +4,7 @@
       xmlns:layout="http://www/ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <!--사용자 css 추가-->
+
 <th:block layout:fragment="css">
     <style>
         .fieldError{
@@ -18,10 +19,63 @@
     <script th:inline="javascript">
         $(document).ready(function(){
             var errorMessage = [[${errorMessage}]];
+            console.log("33333");
             if(errorMessage !=null){
                 alert(errorMessage);
                 }
+
             });
+
+        // 이메일 인증번호
+ function start() {
+
+               var url = "/members/login/mailConfirm";
+              var  email= $("#memail").val();
+
+
+
+   $.ajax({
+        url : url,
+      type : "POST",
+      contentType: "application/json",
+
+      data : email,
+      success : function(data){
+         alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+         console.log("data : "+data);
+         chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
+      }
+     });
+};
+
+
+	// 이메일 인증번호 체크 함수
+	function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
+		$memailconfirm.on("keyup", function(){
+			if (data != $memailconfirm.val()) { //
+				emconfirmchk = false;
+				$memailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
+				$("#emconfirmchk").css({
+					"color" : "#FA3E3E",
+					"font-weight" : "bold",
+					"font-size" : "10px"
+
+				})
+				//console.log("중복아이디");
+			} else { // 아니면 중복아님
+				emconfirmchk = true;
+				$memailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+
+				$("#emconfirmchk").css({
+					"color" : "#0D6EFD",
+					"font-weight" : "bold",
+					"font-size" : "10px"
+
+				});
+			}
+		});
+	}
+
     </script>
 </th:block>
 <!--layout에서 fragment="content" 영역을 치환하기 위해 선언-->
@@ -39,11 +93,17 @@
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect date</p>
         </div>
         <div class="form-group">
-            <label th:for="email">이메일 주소</label>
-            <input type="text" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요.">
+            <label th:for="email" id="mailTxt">이메일 주소</label>
+            <input type="text" th:field="*{email}" class="form-control" name="memail" id="memail"  placeholder="이메일을 입력해주세요.">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect date</p>
-
+            <button class="btn btn-primary" type="button" onclick="start()" name="checkEmail" id="checkEmail">인증번호</button>
         </div>
+
+        <div class="form-group last mb-4 check_input">
+            <label for="memailconfirm" id="memailconfirmTxt">인증번호를 입력해주세요</label>
+            <input type="text" class="form-control" id="memailconfirm">
+        </div>
+
 
         <div class="form-group">
             <label th:for="password">비밀번호</label>

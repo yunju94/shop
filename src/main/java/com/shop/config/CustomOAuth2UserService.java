@@ -1,7 +1,10 @@
 package com.shop.config;
 
+import com.shop.constant.Role;
 import com.shop.dto.SessionUser;
+import com.shop.entity.Member;
 import com.shop.entity.User;
+import com.shop.repository.MemberRepository;
 import com.shop.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Autowired
     private UserRepository userRepository;
 
+    private MemberRepository memberRepository;
 
     @Autowired
     private HttpSession httpSession;
@@ -52,6 +56,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
+
         return  userRepository.save(user);
     }
 

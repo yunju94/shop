@@ -28,6 +28,7 @@ public class MainController {
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);
+
         return  "main";
     }
 
