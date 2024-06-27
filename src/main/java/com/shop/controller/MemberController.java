@@ -2,19 +2,23 @@ package com.shop.controller;
 
 import com.shop.config.CustomOAuth2UserService;
 import com.shop.dto.MemberFormDto;
+import com.shop.dto.OrderDto;
 import com.shop.entity.Member;
-import com.shop.entity.User;
 import com.shop.service.MemberService;
 import com.shop.service.RegisterMail;
 import jakarta.validation.Valid;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/members")
 @Controller
@@ -66,21 +70,6 @@ public class MemberController {
        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
        return "/member/memberLoginForm";
    }
-
-   private final  CustomOAuth2UserService customOAuth2UserService;
-
-
-    // 이메일 인증
-    @PostMapping("/login/mailConfirm")
-    @ResponseBody
-    String mailConfirm(@RequestParam("email") String email, Model model) throws Exception {
-        System.out.println(email);
-
-        String code = registerMail.sendSimpleMessage(email);
-        System.out.println("인증코드 : " + code);
-        model.addAttribute("code", code);
-        return "/member/memberLoginForm";
-    }
 
 
 
