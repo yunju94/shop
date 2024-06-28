@@ -35,7 +35,8 @@
 </th:block>
 
 <div layout:fragment="content">
-    <form th:action="@{'/admin/items/'+ ${items.number}}" role="form" method="get" th:object="${items}">
+    <form th:action="@{'/admin/items/'+ ${items.number}}" role="form" method="get"
+          th:object="${items}">
         <table class="table">
             <thead>
             <tr>

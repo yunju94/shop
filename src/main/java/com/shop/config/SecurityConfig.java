@@ -24,8 +24,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        System.out.println("A");
+
         //로그인에 관여
-        http.authorizeHttpRequests(auth -> auth
+        http.authorizeRequests(auth -> auth
                 .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico", "/error").permitAll()
                 .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -43,6 +45,8 @@ public class SecurityConfig {
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                 .userService(customOAuth2UserService))
         );
+
+        System.out.println("B");
 
         http.exceptionHandling(exception -> exception
                 .authenticationEntryPoint(new CustomAuthenticationEntrypoint()));

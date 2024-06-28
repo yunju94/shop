@@ -59,7 +59,6 @@ public class itemController {
 
     @GetMapping(value = "/admin/item/{itemId}")
     public  String itemDtl(@PathVariable("itemId")Long itemId, Model model){
-        System.out.println("b@naver.com");
         try{
             ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
             model.addAttribute("itemFormDto", itemFormDto);
